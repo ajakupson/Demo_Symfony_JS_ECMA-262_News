@@ -1,0 +1,86 @@
+{% extends 'bundles/PublicBundle/layout.html.twig' %}
+
+{% block title %}Symfony News Demo - News{% endblock %}
+
+{% block body %}
+    <h1><a href="{{ path('public.news.list') }}" class="cl-black txt-decor-none">To News List</a></h1>
+    {% if news is not empty %}
+        <div class="news-item">
+            <h2 class="news-title">{{ news.title }}</h2>
+
+            <div class="news-meta">
+                <span class="news-date">Published on: {{ news.insertDate|date('Y-m-d H:i') }}</span>
+                <span class="news-categories">
+                    Categories:
+                    {% for category in news.categories %}
+                        <span class="category">
+                            {{ category.title }}
+                        </span>
+                        {% if not loop.last %}, {% endif %}
+                    {% endfor %}
+                </span>
+            </div>
+
+            <p class="news-short-description">{{ news.shortDescription }}</p>
+
+            {% if news.picture %}
+                <div class="news-image">
+                    <img src="/uploads/{{ news.picture }}" alt="news image" class="img-fluid">
+                </div>
+            {% endif %}
+
+            <div class="news-content">
+                <p>{{ news.content }}</p>
+            </div>
+
+            <div class="comments-section">
+                <h3 class="mb-0">Comments</h3>
+
+                {% if news.comments is not empty %}
+                    <ul class="comments-list" id="comments-list">
+                        {% for comment in news.comments %}
+                            <li class="comment-item">
+                                <p class="comment-content">{{ comment.content | escape }}</p>
+                                <span class="comment-author">{{ comment.username ? comment.username : 'Anonymous' }}</span>
+                                <span class="comment-date">{{ comment.createdAt|date('Y-m-d H:i') }}</span>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>No comments yet. Be the first to comment!</p>
+                {% endif %}
+
+                <div class="comment-form">
+                    <h4 class="mb-0">Add a Comment</h4>
+                    <form data-add-news-comment-url="{{ path('public.news.add.comment', {'id': news.id}) }}">
+                        <div class="form-group">
+                            <label for="username">Name:</label>
+                            <input type="text"
+                                   name="username"
+                                   id="username"
+                                   class="form-control flex-grow-1"
+                                   placeholder="Your name"
+                                   required>
+                        </div>
+                        <div class="form-group">
+                            <label for="content">Comment:</label>
+                            <textarea name="content"
+                                      id="content"
+                                      class="form-control flex-grow-1 h-auto"
+                                      placeholder="Your comment"
+                                      required
+                                      rows="5"
+                            ></textarea>
+                        </div>
+                        <button type="button" class="btn btn-primary" id="news-add-comment-btn">Add Comment</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/PublicBundle/news.js') }}"></script>
+{% endblock %}

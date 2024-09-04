@@ -1,0 +1,14 @@
+public.news.list:
+  path: /news
+  controller: App\PublicBundle\Controller\NewsController::index
+  methods: [GET]
+
+public.news:
+  path: /news/{id}
+  controller: App\PublicBundle\Controller\NewsController::news
+  methods: [GET]
+
+public.news.add.comment:
+  path: /news/{id}/add_comment
+  controller: App\PublicBundle\Controller\NewsController::newsAddComment
+  methods: [POST]

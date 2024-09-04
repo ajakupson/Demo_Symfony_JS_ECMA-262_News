@@ -1,0 +1,64 @@
+{% extends 'bundles/PublicBundle/layout.html.twig' %}
+
+{% block title %}Symfony News Demo - News List{% endblock %}
+
+{% block body %}
+    <div class="d-flex flex-flow-column justify-content-start align-items-start">
+        <div class="row">
+            <h1 class="mb-0">News Categories</h1>
+            <span class="badge badge-info">
+                <span class="category-title">
+                    <a href="{{ path('public.news.list', { 'page': 1 }) }}">All</a>
+                </span>
+            </span>
+            {% for category in newsCategories %}
+                <span class="badge badge-info">
+                    <span class="category-title">
+                        <a href="{{ path('public.news.list', { 'page': 1, 'category': category.id }) }}">{{ category.title }}</a>
+                    </span>
+                </span>
+            {% endfor %}
+        </div>
+        <div class="row">
+            <h1 class="mb-0">News List</h1>
+        </div>
+        <div class="d-flex flex-flow-row flex-flow-row-wrap justify-content-center align-items-start gap-5"
+             id="news-container"
+        >
+            {% for news in newsList %}
+                <div class="news-item mx-w-300">
+                    <h2 class="news-title"><a href="{{ path('public.news', {'id': news.id}) }}">{{ news.title }}</a></h2>
+
+                    <div class="news-meta">
+                        <span class="news-date">Published on: {{ news.insertDate|date('Y-m-d H:i') }}</span>
+                        <span class="news-categories">
+                                Categories:
+                                {% for category in news.categories %}
+                                    <a href="{{ path('public.news.list', { 'page': 1, 'category': category.id }) }}" class="category">
+                                        {{ category.title }}
+                                    </a>
+                                    {% if not loop.last %}, {% endif %}
+                                {% endfor %}
+                            </span>
+                    </div>
+
+                    <p class="news-short-description multi-line-ellipsis">{{ news.shortDescription }}</p>
+
+                    {% if news.picture %}
+                        <div class="news-image">
+                            <img src="/thumbnails/{{ news.picture }}" alt="news image" class="img-fluid">
+                        </div>
+                    {% endif %}
+
+                    <div class="news-content multi-line-ellipsis">
+                        <p>{{ news.content }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="row h-center">
+            {{ knp_pagination_render(newsList) }}
+        </div>
+    </div>
+
+{% endblock %}

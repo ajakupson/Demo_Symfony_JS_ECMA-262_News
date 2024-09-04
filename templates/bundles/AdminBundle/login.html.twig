@@ -1,0 +1,27 @@
+{% extends 'bundles/AdminBundle/layout.html.twig' %}
+
+{% block title %}Symfony News Demo - Admin / Login{% endblock %}
+
+{% block body %}
+    <div class="card center">
+        <h3>Login</h3>
+        <form action="{{ path('admin_login_check') }}" method="post">
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" name="_username" autocomplete="off"/>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" name="_password"/>
+            </div>
+            <div class="form-group d-flex justify-content-end">
+                <button type="submit" class="btn btn-primary">Enter</button>
+            </div>
+        </form>
+        {% if error %}
+            <div class="alert alert-danger">
+                {{ error.messageKey|trans(error.messageData, 'security') }}
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

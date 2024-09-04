@@ -1,0 +1,62 @@
+admin_login:
+  path: /admin
+  controller: App\AdminBundle\Controller\AuthController::login
+  methods: ['GET']
+
+admin_login_check:
+  path: /admin/login_check
+  methods: ['POST']
+
+admin_logout:
+  path: /admin/logout
+  methods: ['POST']
+
+admin.news.categories:
+  path: admin/news/categories
+  controller: App\AdminBundle\Controller\NewsCategoriesController::index
+  methods: ['GET']
+
+admin.news.categories.add:
+  path: admin/news/categories/add
+  controller: App\AdminBundle\Controller\NewsCategoriesController::addCategory
+  methods: ['POST']
+
+admin.news.categories.update:
+  path: admin/news/categories/{id}/update
+  controller: App\AdminBundle\Controller\NewsCategoriesController::updateCategory
+  methods: ['POST']
+
+admin.news.categories.delete:
+  path: admin/news/categories/delete/{id}
+  controller: App\AdminBundle\Controller\NewsCategoriesController::deleteCategory
+  methods: ['DELETE']
+
+admin.news.list:
+  path: /admin/news
+  controller: App\AdminBundle\Controller\NewsController::index
+  methods: ['GET']
+
+admin.news.add:
+  path: /admin/news/add
+  controller: App\AdminBundle\Controller\NewsController::addNews
+  methods: ['POST']
+
+admin.news.delete:
+  path: /admin/news/delete/{id}
+  controller: App\AdminBundle\Controller\NewsController::deleteNews
+  methods: ['DELETE']
+
+admin.news:
+  path: /admin/news/{id}
+  controller: App\AdminBundle\Controller\NewsController::news
+  methods: ['GET']
+
+admin.news.update:
+  path: /admin/news/update/{id}
+  controller: App\AdminBundle\Controller\NewsController::updateNews
+  methods: ['POST']
+
+admin.news.comment.delete:
+  path: /admin/news/comment/{id}
+  controller: App\AdminBundle\Controller\NewsController::deleteNewsComment
+  methods: ['DELETE']

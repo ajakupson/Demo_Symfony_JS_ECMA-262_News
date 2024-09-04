@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>{% block title %}Symfony News Demo{% endblock %}</title>
+
+        {% block stylesheets %}
+            <link rel="stylesheet" href="{{ asset('styles/PublicBundle/design.css') }}">
+            <link rel="stylesheet" href="{{ asset('styles/CoreBundle/helpers.css') }}">
+            <link rel="stylesheet" href="{{ asset('styles/AdminBundle/notification.css') }}">
+        {% endblock %}
+
+        {% block javascripts %}
+            <script src="{{ asset('js/CoreBundle/ajax.js') }}"></script>
+            <script src="{{ asset('js/CoreBundle/notification.js') }}"></script>
+        {% endblock %}
+    </head>
+    <body class="d-flex flex-flow-column justify-content-between align-items-center h-100vh">
+
+    {% block header %}
+        <header>
+            <div class="d-flex justify-content-start align-items-center gap-20">
+                <img src="{{ asset('images/CoreBundle/symfony-logo.svg') }}" alt="logo" class="logo">
+                <h3 class="title mb-0">Symfony News Demo</h3>
+            </div>
+        </header>
+    {% endblock %}
+
+    <main class="d-flex justify-content-start fl-grow-1">
+        <div class="content">
+            {% block body %}
+            {% endblock %}
+        </div>
+    </main>
+
+    {% block footer %}
+        <footer>
+            <p>&copy; {{ "now"|date("Y") }} Symfony News Demo</p>
+        </footer>
+    {% endblock %}
+
+    <div class="notification-container" id="notification-container"></div>
+
+    </body>
+</html>

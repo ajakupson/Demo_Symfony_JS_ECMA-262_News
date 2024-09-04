@@ -1,0 +1,108 @@
+{% extends 'bundles/AdminBundle/layout.html.twig' %}
+
+{% block title %}Symfony News Demo - Admin / News{% endblock %}
+
+{% block body %}
+    {% if news is not empty %}
+        <div class="d-flex flex-flow-column justify-content-center align-items-start w-100">
+            <form class="w-100" id="form-update-news" data-update-url="{{ path('admin.news.update', {'id': news.id}) }}">
+                <div class="form-group mt-0">
+                    <label for="news-title">Title:</label>
+                    <input type="text"
+                           name="title"
+                           class="flex-grow-1"
+                           id="news-title" required
+                           value="{{ news.title }}"
+                    />
+                </div>
+
+                <div class="form-group">
+                    <label for="news-short-description">Short Description:</label>
+                    <textarea name="shortDescription"
+                              class="flex-grow-1 h-auto"
+                              id="news-short-description"
+                              required
+                              rows="5"
+                    >{{ news.shortDescription }}</textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="news-content">Content:</label>
+                    <textarea name="content"
+                              class="flex-grow-1 h-auto"
+                              id="news-content"
+                              required
+                              rows="10"
+                    >{{ news.content }}</textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="news-insert-date">Insert Date:</label>
+                    <input type="datetime-local"
+                           name="insertDate"
+                           class="flex-grow-1"
+                           id="news-insert-date" required
+                           value="{{ news.insertDate | date('Y-m-d\\TH:i') }}"
+                    />
+                </div>
+
+                <div class="form-group">
+                    <label for="news-picture">Picture:</label>
+                    <input type="file"
+                           name="picture"
+                           class="flex-grow-1"
+                           id="news-picture"
+                           accept="image/*" />
+                </div>
+
+                <div class="d-flex justify-content-center align-items-center mt-10">
+                    {% if news.picture %}
+                        <img src="/uploads/{{ news.picture }}" alt="news image" class="img-fluid">
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label for="news-categories">Categories:</label>
+                    <select name="categories" id="news-categories" class="flex-grow-1" multiple>
+                        {% for newsCategory in newsCategories %}
+                            <option value="{{ newsCategory.id }}"
+                                    {% if news.categories.contains(newsCategory) %}selected{% endif %}
+                            >{{ newsCategory.title }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group justify-content-end">
+                    <button type="button" class="btn btn-primary" id="btn-update-news">Update</button>
+                </div>
+            </form>
+
+            <div class="comments-section">
+                <h3 class="mb-0">Comments</h3>
+
+                {% if news.comments is not empty %}
+                    <ul class="comments-list" id="comments-list" data-delete-comment-url="{{ path('admin.news.comment.delete', {'id': 0}) }}">
+                        {% for comment in news.comments %}
+                            <li class="comment-item" data-id="{{ comment.id }}">
+                                <p class="comment-content">{{ comment.content | escape }}</p>
+                                <span class="comment-author">{{ comment.username ? comment.username : 'Anonymous' }}</span>
+                                <span class="comment-date">{{ comment.createdAt|date('Y-m-d H:i') }}</span>
+                                <br/>
+                                <button type="button" class="btn btn-danger delete-comment-btn mt-10">Delete</button>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                 {% else %}
+                     <p>No comments yet</p>
+                {% endif %}
+            </div>
+        </div>
+    {% else %}
+        No news with given id
+    {% endif %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/AdminBundle/news.js') }}"></script>
+{% endblock %}
