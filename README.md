@@ -14,7 +14,7 @@ Easiest way to run:
  ```
 It will create container and images for Symfony app and apply migrations
 - 2. Navigate to http://localhost:8080/admin for administration
-    Username: admin, password: admin 
+     (username: admin, password: admin) 
 - 3. Navigate to http://localhost:8080/news to see the news
 
 ## Project structure:
