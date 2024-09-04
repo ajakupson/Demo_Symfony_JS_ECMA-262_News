@@ -36,17 +36,17 @@
             <div class="comments-section">
                 <h3 class="mb-0">Comments</h3>
 
-                {% if news.comments is not empty %}
-                    <ul class="comments-list" id="comments-list">
-                        {% for comment in news.comments %}
-                            <li class="comment-item">
-                                <p class="comment-content">{{ comment.content | escape }}</p>
-                                <span class="comment-author">{{ comment.username ? comment.username : 'Anonymous' }}</span>
-                                <span class="comment-date">{{ comment.createdAt|date('Y-m-d H:i') }}</span>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                {% else %}
+                <ul class="comments-list" id="comments-list">
+                    {% for comment in news.comments %}
+                        <li class="comment-item">
+                            <p class="comment-content">{{ comment.content | escape }}</p>
+                            <span class="comment-author">{{ comment.username ? comment.username : 'Anonymous' }}</span>
+                            <span class="comment-date">{{ comment.createdAt|date('Y-m-d H:i') }}</span>
+                        </li>
+                    {% endfor %}
+                </ul>
+
+                {% if not news.comments %}
                     <p>No comments yet. Be the first to comment!</p>
                 {% endif %}
 
