@@ -11,8 +11,6 @@ document.addEventListener('DOMContentLoaded', function() {
     var newsContainer = document.getElementById('news-container');
     var deleteNewsUrl = newsContainer.getAttribute('data-delete-url');
 
-
-    // Обработчик для удаления новости
     newsContainer.addEventListener('click', function(event) {
         if (event.target.classList.contains('fa-trash-o')) {
             var newsElement = event.target.closest('.news-item');

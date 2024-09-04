@@ -10,7 +10,23 @@ document.addEventListener('DOMContentLoaded', function() {
     var formUpdateNews = document.getElementById('form-update-news');
     var updateNewsUrl = formUpdateNews.getAttribute('data-update-url');
     var commentsList = document.getElementById('comments-list');
-    var deleteNewsCommentUrl = commentsList.getAttribute('data-delete-comment-url');
+
+    var deleteNewsCommentUrl = '';
+    if (commentsList !== null) {
+        deleteNewsCommentUrl = commentsList.getAttribute('data-delete-comment-url');
+
+        commentsList.addEventListener('click', function(event) {
+            if (event.target.classList.contains('delete-comment-btn')) {
+                if(!(confirm('Are you sure you want to delete this comment?'))) {
+                    return;
+                }
+
+                var commentElement = event.target.closest('.comment-item');
+                var commentId = commentElement.getAttribute('data-id');
+                deleteComment(commentId, commentElement);
+            }
+        });
+    }
 
     btnUpdateNews.addEventListener('click', function(event) {
         if(!(confirm('Are you sure you want to update this news?'))) {
@@ -18,18 +34,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         updateNews();
-    });
-
-    commentsList.addEventListener('click', function(event) {
-        if (event.target.classList.contains('delete-comment-btn')) {
-            if(!(confirm('Are you sure you want to delete this comment?'))) {
-                return;
-            }
-
-            var commentElement = event.target.closest('.comment-item');
-            var commentId = commentElement.getAttribute('data-id');
-            deleteComment(commentId, commentElement);
-        }
     });
 
     function deleteComment(id, commentElement) {

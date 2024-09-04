@@ -90,3 +90,7 @@
 .txt-decor-none {
     text-decoration: none;
 }
+
+.mx-w-100p {
+    max-width: 100%;
+}
