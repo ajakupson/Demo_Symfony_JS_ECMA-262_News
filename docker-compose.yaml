@@ -15,6 +15,8 @@ services:
       - ./docker/php.ini:/usr/local/etc/php/conf.d/custom-php.ini:ro
     networks:
       - symfony
+    depends_on:
+      - mysql
 
   nginx:
     image: nginx:latest

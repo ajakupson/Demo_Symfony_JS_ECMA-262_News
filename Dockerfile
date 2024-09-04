@@ -29,12 +29,14 @@ RUN curl -sS https://get.symfony.com/cli/installer | bash && \
 WORKDIR /var/www/symfony
 
 COPY . .
+
 RUN composer install --no-interaction --optimize-autoloader
 
 RUN chown -R www-data:www-data /var/www/symfony
 
 RUN php bin/console cache:warmup
 
-RUN php bin/console doctrine:migrations:migrate --no-interactio
+COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
 
-CMD ["php-fpm"]
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
